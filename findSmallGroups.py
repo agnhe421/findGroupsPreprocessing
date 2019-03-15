@@ -59,16 +59,10 @@ for x in range(0, len(group)):
     #  wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
     #  wr.writerow(mylist)
 
-	
-	with open('parsed/parsedDataFile', 'w') as csvfile:
-		writer = csv.writer(csvfile)
-		writer.writerow(group)
 
-#csvFile.close()
-	# 	for i in range(0, len(group)): 
-	# 		writer.writerow(group[i])
 
-	# 	for row in range(0, len(group)): 
-	# 		writer.writerow(group[row])
-
-	# #csvfile.close()	
+with open('parsed/parsedDataFile', 'w') as outfile:
+    fp = csv.DictWriter(outfile, group[0].keys())
+    fp.writeheader()
+    fp.writerows(group)
+    outfile.close()	
