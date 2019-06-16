@@ -1,17 +1,16 @@
 import csv
 import os
 from collections import defaultdict
-
-dataPath = "C:/tnm098/preprocessing/findGroupsPreprocessing/parsed/fridayTest.csv"
+dataPath = "/Users/agnesheppich/Documents/School/tnm098/findGroupsPreprocessing/parsed/friday.csv"
 alone = []
 twoToThree = []
 threeToFour = []
 moreThanFour = []
 data = []
 print("Reading data...")
-
 with open(dataPath) as f:
     reader = csv.DictReader(f, fieldnames=['TimeStamp', 'id', 'type', 'X', 'Y', 'GroupId', 'GroupSize']) 
+    next(reader)   
     for row in reader:
         if float(row['GroupSize']) > 0 and float(row['GroupSize']) < 2: 
             alone.append(row['GroupSize'])
@@ -35,7 +34,7 @@ data.append(threeToFourSize)
 data.append(moreThanFourSize)
 
 print(data)
-with open('groupSizes/groupSizes', 'w') as outfile:
+with open('groupSizes/groupSizesFriday', 'w') as outfile:
     out = csv.DictWriter(outfile, fieldnames = ["alone", "twoToThree", "threeToFour", "moreThanFour"])
     out.writeheader()
     for test in data: 

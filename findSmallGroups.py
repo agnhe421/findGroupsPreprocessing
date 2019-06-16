@@ -2,13 +2,11 @@ import csv
 import os
 from collections import defaultdict
 
-localPath = "C:/tnm098/preprocessing/findGroupsPreprocessing/"
+localPath = "/Users/agnesheppich/Documents/School/tnm098/findGroupsPreprocessing/"
 generatedDataDir = "parsed/"
-dataFile = "testData.csv"
+dataFile = "saturday.csv"
 dataDir = "data/"
-dataExtension = ".csv"
 
-parsedDataFile = "Friday"
 dataPath = localPath + dataDir + dataFile
 
 group = []
@@ -16,6 +14,9 @@ data = []
 deletedMembers = []
 numberOfPeopleInGroupLIst = []
 
+groupSize = 0
+
+print('GROUP SIZE ' + str(groupSize))
 print("Finding the group...")
 
 with open(dataPath) as f:
@@ -28,23 +29,24 @@ with open(dataPath) as f:
 
 for i in range(0, len(data)):
 	if not(data[i]['id'] in group):
-		#print('looking for groups...')
+		print('looking for groups...')
 		if(i+1 < len(data)):
 			if not(data[i]['X'] == data[i+1]['X'] and data[i]['Y'] == data[i+1]['Y'] and data[i]['TimeStamp'] == data[i+1]['TimeStamp'] ):
-				#print(data[i])
-				#print('NEW member')
+				# print(data[i])
+				print('NEW member')
 				group.append(data[i])
 				numberOfPeopleIngroup = len(deletedMembers)
 				numberOfPeopleInGroupLIst.append(numberOfPeopleIngroup)
 				deletedMembers.clear()
+				print('GROUP SIZE ' + str(groupSize)); 
+
 				data[i]['GroupSize'] = groupSize + 1
-				#print(data[i])
+				# print(data[i])
 				groupSize = 0
 
 			else:
 				deletedMembers.append(data[i])
 				groupSize = len(deletedMembers)
-				#print(groupSize); 
 				data[i]['GroupSize'] = groupSize + 1
 				#print('member DELETED')
 		#		print(data[i])
@@ -61,7 +63,7 @@ for x in range(0, len(group)):
 
 
 
-with open('parsed/parsedDataFile', 'w') as outfile:
+with open('parsed/saturday', 'w') as outfile:
     fp = csv.DictWriter(outfile, group[0].keys())
     fp.writeheader()
     fp.writerows(group)
